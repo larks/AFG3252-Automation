@@ -33,10 +33,18 @@ class FunctionGenerator:
 
     def runSweep(self, fStart, fStop, holdTime, steps): 
         pass
-    
-    
-        
 
+    def setLeading(self, ch, seconds):
+        pass
+
+    def setTrailing(self, ch, seconds):
+        pass
+
+    def setVoltageHigh(self, ch, val):
+        pass
+    
+    def setVoltageLow(self, ch, val):
+        pass
         
 class AFG3252(FunctionGenerator):
     def __init__(self, host):
@@ -50,7 +58,7 @@ class AFG3252(FunctionGenerator):
 
     def setFrequency(self, frequency):
         print 'Setting fixed frequency to {0}'.format(frequency)
-        self.conn.write('SOUR:FREQ:FIX {0} Hz'.format(frequency))
+        self.conn.write('SOUR:FREQ:FIX {0}'.format(frequency))
 
     def setVoltage(self, V):
         pass
@@ -93,6 +101,40 @@ class AFG3252(FunctionGenerator):
         self.setFrequency(stop)
         time.sleep(wait)
 
+    def setLeading(self, ch, seconds):
+        print 'Setting leading edge on channel {0} to {1}'.format(ch,seconds)
+        if ch == 1:
+            self.conn.write('SOURCE1:PULSE:TRANSITION:LEADING {0}'.format(seconds))
+        elif ch == 2:
+            self.conn.write('SOURCE2:PULSE:TRANSITION:LEADING {0}'.format(seconds))
+        else:
+            print 'I don\'t have that channel {0}'.format(ch)
 
-        
+    def setTrailing(self, ch, seconds):
+        print 'Setting trailing edge on channel {0} to {1}'.format(ch,seconds)
+        if ch == 1:
+            self.conn.write('SOURCE1:PULSE:TRANSITION:TRAILING {0}'.format(seconds))
+        elif ch == 2:
+            self.conn.write('SOURCE2:PULSE:TRANSITION:TRAILING {0}'.format(seconds))
+        else:
+            print 'I don\'t have that channel {0}'.format(ch)
+
+    def setVoltageHigh(self, ch, val):
+        print 'Setting high voltage on channel {0} to {1}'.format(ch,val)
+        if ch == 1:
+            self.conn.write('SOURCE1:VOLTAGE:LIMIT:HIGH {0}'.format(val))
+        elif ch == 2:
+            self.conn.write('SOURCE2:VOLTAGE:LIMIT:HIGH {0}'.format(val))
+        else:
+            print 'I don\'t have that channel {0}'.format(ch)
+  
+    def setVoltageLow(self, ch, val):
+        print 'Setting low voltage on channel {0} to {1}'.format(ch,val)
+        if ch == 1:
+            self.conn.write('SOURCE1:VOLTAGE:LIMIT:LOW {0}'.format(val))
+        elif ch == 2:
+            self.conn.write('SOURCE2:VOLTAGE:LIMIT:LOW {0}'.format(val))
+        else:
+            print 'I don\'t have that channel {0}'.format(ch)
+     
 

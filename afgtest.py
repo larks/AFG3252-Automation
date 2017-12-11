@@ -1,14 +1,17 @@
 from AFG3252 import * 
 import time
+import socket
 
+fg = socket.gethostbyname('tektronixafg3252.dyndns.cern.ch')
 
+print 'Function generator on IP {0}...'.format(fg)
+dev = AFG3252(fg)
 
-print 'Testing AFG'
+dev.disableOutput(1)
+dev.disableOutput(2)
 
-
-
-dev = AFG3252('128.141.92.74')
 dev.outputType('pulse')
+dev.outputPolarity(1,'INVerted')
 dev.setFrequency(7000)
 #dev.setVoltage(1, "50mV")
 dev.setVoltageHigh(1,"50mV")
